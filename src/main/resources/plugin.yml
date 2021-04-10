@@ -1,5 +1,12 @@
 name: $pluginName
 main: $pluginMain
-depend: [ Kotlin, ProtocolLib ]
+depend: [ Kotlin ]
 api-version: '1.16'
 version: $version
+commands:
+  punction:
+    aliases: [punc]
+    permission: punction.dispatch
+  punction-reload:
+    aliases: [prl]
+    permission: punction.reload

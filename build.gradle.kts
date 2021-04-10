@@ -21,7 +21,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
 
-    implementation("com.github.monun:tap:+")
+//    implementation("com.github.monun:tap:+")
     implementation("com.github.monun:kommand:+")
 
 //    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
