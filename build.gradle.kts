@@ -2,9 +2,7 @@ import java.io.OutputStream
 
 plugins {
     kotlin("jvm") version "1.4.32"
-    kotlin("plugin.serialization") version "1.4.32"
     id("com.github.johnrengelman.shadow") version "5.2.0"
-//    `maven-publish`
 }
 
 val relocate = (findProperty("relocate") as? String)?.toBoolean() ?: true
@@ -18,10 +16,8 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib"))
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
 
-//    implementation("com.github.monun:tap:+")
     implementation("com.github.monun:kommand:+")
 
 //    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
