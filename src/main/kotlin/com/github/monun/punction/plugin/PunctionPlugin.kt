@@ -29,6 +29,7 @@ class PunctionPlugin : JavaPlugin() {
                     val punction = it.parseArgument<Punction>("name")
                     val server = server
                     for (command in punction.commands) {
+                        logger.info("${sender.name}: $command")
                         server.dispatchCommand(sender, command)
                     }
                 }
