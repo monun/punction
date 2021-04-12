@@ -19,7 +19,7 @@ class PunctionManager(
 
         folder.listFiles { _, name -> name.endsWith(".punction") }?.forEach { file ->
             val name = file.nameWithoutExtension
-            val commands = file.readLines().map { it.trim() }
+            val commands = file.readLines().asSequence().filter { it.isNotBlank() }.map { it.trim() }.toList()
             punctions[name] = Punction(ImmutableList.copyOf(commands))
         }
 
