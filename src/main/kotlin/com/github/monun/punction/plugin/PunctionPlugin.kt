@@ -1,12 +1,10 @@
 package com.github.monun.punction.plugin
 
-import com.github.monun.kommand.KommandContext
-import com.github.monun.kommand.argument.KommandArgument
-import com.github.monun.kommand.argument.suggestions
-import com.github.monun.kommand.kommand
-import com.github.monun.kommand.sendFeedback
 import com.github.monun.punction.Punction
 import com.github.monun.punction.PunctionManager
+import io.github.monun.kommand.getValue
+import io.github.monun.kommand.kommand
+import net.kyori.adventure.text.Component.*
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -23,13 +21,33 @@ class PunctionPlugin : JavaPlugin() {
 
     private fun setupKommands() = kommand {
         register("punction") {
-            then("name" to PunctionArgument()) {
+            val punctionArgument = dynamic { _, input ->
+                punctionManager.punction(input)
+            }.apply {
+                suggests(punctionManager.punctions::values, { it.name }) {
+                    val commands = it.commands
+
+                    if (commands.isEmpty()) empty()
+                    else {
+                        val builder = text()
+                        val iterator = commands.iterator()
+
+                        while (true) {
+                            builder.append(text().content(iterator.next())); if (!iterator.hasNext()) break
+                            builder.append(newline())
+                        }
+
+                        builder
+                    }
+                }
+            }
+
+            then("punction" to punctionArgument) {
                 executes {
-                    val sender = it.sender
-                    val punction = it.parseArgument<Punction>("name")
+                    val punction: Punction by it
                     val server = server
                     for (command in punction.commands) {
-                        logger.info("${sender.name}: $command")
+                        broadcast(text().content("${sender.name}: $command"))
                         server.dispatchCommand(sender, command)
                     }
                 }
@@ -38,18 +56,8 @@ class PunctionPlugin : JavaPlugin() {
         register("punction-reload") {
             executes {
                 punctionManager.load()
-                it.sender.sendFeedback("Punction reload completed.")
+                broadcast(text().content("Punction reload completed."))
             }
-        }
-    }
-
-    inner class PunctionArgument: KommandArgument<Punction> {
-        override fun parse(context: KommandContext, param: String): Punction? {
-            return punctionManager.punction(param)
-        }
-
-        override fun listSuggestion(context: KommandContext, target: String): Collection<String> {
-            return punctionManager.punctions.keys.suggestions(target)
         }
     }
 }

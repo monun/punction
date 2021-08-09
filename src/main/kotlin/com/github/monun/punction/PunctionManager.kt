@@ -22,7 +22,7 @@ class PunctionManager(
             val commands = file.readLines().asSequence().mapNotNull { command ->
                 command.trim().takeIf { it.isNotEmpty() }
             }.toList()
-            punctions[name] = Punction(ImmutableList.copyOf(commands))
+            punctions[name] = Punction(name, ImmutableList.copyOf(commands))
         }
 
         this.punctions = ImmutableSortedMap.copyOf(punctions)

@@ -1,12 +1,7 @@
-name: $pluginName
-main: $pluginMain
-depend: [ Kotlin ]
-api-version: '1.16'
-version: $version
-commands:
-  punction:
-    aliases: [punc]
-    permission: punction.dispatch
-  punction-reload:
-    aliases: [prl]
-    permission: punction.reload
+name: ${pluginName}
+version: ${version}
+main: ${group}.${packageName}.plugin.${pluginName}Plugin
+api-version: 1.17
+libraries:
+  - io.github.monun:tap:4.1.3
+  - io.github.monun:kommand:2.4.1
